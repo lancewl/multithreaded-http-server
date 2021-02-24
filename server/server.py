@@ -26,18 +26,23 @@ class MyHttpRequestHandler(SimpleHTTPRequestHandler):
             fullname = os.path.join(path, name)
             displayname = linkname = name
             md5 = ""
+            nametype = ""
             # Append / for directories or @ for symbolic links
             if os.path.isdir(fullname):
                 displayname = name + "/"
                 linkname = name + "/"
+                nametype = "dir"
             if os.path.islink(fullname):
                 displayname = name + "@"
+                nametype = "link"
                 # Note: a link to a directory displays with @ and links with /
             if os.path.isfile(fullname):
                 md5 = hashlib.md5(open(linkname,'rb').read()).hexdigest()
+                nametype = "file"
             r[displayname] = {}
             r[displayname]["link"] = urllib.parse.quote(linkname, errors='surrogatepass')
             r[displayname]["md5"] = md5
+            r[displayname]["type"] = nametype
         
         enc = sys.getfilesystemencoding()
         encoded = json.dumps(r).encode(enc, 'surrogateescape')
