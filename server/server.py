@@ -1,10 +1,10 @@
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from http import HTTPStatus
 import urllib.parse
-import html
 import sys
 import io
 import os
+import hashlib
 import click
 import json
 
@@ -25,6 +25,7 @@ class MyHttpRequestHandler(SimpleHTTPRequestHandler):
         for name in list:
             fullname = os.path.join(path, name)
             displayname = linkname = name
+            md5 = ""
             # Append / for directories or @ for symbolic links
             if os.path.isdir(fullname):
                 displayname = name + "/"
@@ -32,8 +33,11 @@ class MyHttpRequestHandler(SimpleHTTPRequestHandler):
             if os.path.islink(fullname):
                 displayname = name + "@"
                 # Note: a link to a directory displays with @ and links with /
+            if os.path.isfile(fullname):
+                md5 = hashlib.md5(open(linkname,'rb').read()).hexdigest()
             r[displayname] = {}
             r[displayname]["link"] = urllib.parse.quote(linkname, errors='surrogatepass')
+            r[displayname]["md5"] = md5
         
         enc = sys.getfilesystemencoding()
         encoded = json.dumps(r).encode(enc, 'surrogateescape')
