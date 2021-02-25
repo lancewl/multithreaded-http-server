@@ -24,13 +24,13 @@ def download_file(file_name, file_link, file_md5):
             for chunk in r.iter_content(chunk_size = 1024*1024):  
                 if chunk:  
                     f.write(chunk)
+        print( "%s downloaded!\n"%file_name ) 
     else:
         print("Checksum failed")
-        
-    print( "%s downloaded!\n"%file_name ) 
+        print( "Fail to download %s!\n"%file_name ) 
+    
   
 def download_files_serial(file_list, server_url):  
-  
     for file_name, file_info in file_list.items():  
         if file_info["type"] == "file": # Only download files
             download_file(file_name, server_url + file_info["link"], file_info["md5"])
