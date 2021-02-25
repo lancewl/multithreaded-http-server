@@ -9,8 +9,8 @@ autopep8 = "*"
 [packages]
 click = "*"
 requests = "*"
-bs4 = "*"
 html5lib = "*"
+pyinquirer = "*"
 
 [requires]
 python_version = "3.7"
