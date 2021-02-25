@@ -12,7 +12,6 @@ import json
 class MyHttpRequestHandler(SimpleHTTPRequestHandler):
     def list_directory(self, path):
         # Override the original file listing method
-
         try:
             list = os.listdir(path)
         except OSError:
@@ -61,8 +60,8 @@ class MyHttpRequestHandler(SimpleHTTPRequestHandler):
 @click.option('--dir',
               default="data",
               help='Serving directory relative to current directory')
-def run(port, server_class=ThreadingHTTPServer, handler_class=MyHttpRequestHandler):
-    target_dir = os.path.join(os.path.dirname(__file__), 'data')
+def run(port, dir, server_class=ThreadingHTTPServer, handler_class=MyHttpRequestHandler):
+    target_dir = os.path.join(os.path.dirname(__file__), dir)
     os.chdir(target_dir)
 
     server_address = ('', port)
