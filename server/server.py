@@ -58,6 +58,9 @@ class MyHttpRequestHandler(SimpleHTTPRequestHandler):
 @click.option('--port',
               default=8888,
               help='Listening Port')
+@click.option('--dir',
+              default="data",
+              help='Serving directory relative to current directory')
 def run(port, server_class=ThreadingHTTPServer, handler_class=MyHttpRequestHandler):
     target_dir = os.path.join(os.path.dirname(__file__), 'data')
     os.chdir(target_dir)
