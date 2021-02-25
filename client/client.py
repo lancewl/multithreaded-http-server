@@ -12,23 +12,25 @@ def get_file_list(server_url):
     return data
 
 def download_file(file_name, file_link, file_md5):
-    print( "Downloading file:%s"%file_name)  
+    # print( "Downloading file:%s"%file_name)  
+    start = time.time()
     
     # create response object  
     r = requests.get(file_link, stream = True)  
 
+    end = time.time()
+
     md5 = hashlib.md5(r.content).hexdigest()
 
     if md5 == file_md5:
-        print("Checksum successful")
+        # print("Checksum successful")
         with open(file_name, 'wb') as f:  
             for chunk in r.iter_content(chunk_size = 1024*1024):  
                 if chunk:  
                     f.write(chunk)
-        print( "%s downloaded!\n"%file_name ) 
+        print(file_name + f" downloaded, time taken - {end - start} sec" ) 
     else:
-        print("Checksum failed")
-        print( "Fail to download %s!\n"%file_name ) 
+        print( "Checksum failed, failed to download %s!"%file_name ) 
     
   
 def download_files_serial(file_list, server_url):  
@@ -36,7 +38,6 @@ def download_files_serial(file_list, server_url):
         if file_info["type"] == "file": # Only download files
             download_file(file_name, server_url + file_info["link"], file_info["md5"])
   
-    print ("All files downloaded!") 
     return
 
 def download_files_parallel(file_list, server_url):  
@@ -50,7 +51,6 @@ def download_files_parallel(file_list, server_url):
     for thread in threads:
         thread.join()
             
-    print ("All files downloaded!") 
     return
 
 def run_client(selected_files, server_url, mode):
@@ -106,6 +106,10 @@ if __name__ == "__main__":
     ]
     download_config = prompt(download_questions)
     selected_files = {f : file_list[f] for f in download_config["selected_files"]}
+
+    print("Start to download following files:")
+    print(download_config["selected_files"])
+    print("\n")
     
     start = time.time()
 
@@ -120,4 +124,5 @@ if __name__ == "__main__":
         thread.join()
     
     end = time.time()
-    print(f"Time taken: {end - start} sec")
+    print("\n")
+    print(f"Total Time taken: {end - start} sec")
