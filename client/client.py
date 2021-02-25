@@ -52,6 +52,12 @@ def download_files_parallel(file_list, server_url):
             
     print ("All files downloaded!") 
     return
+
+def run_client(selected_files, server_url, mode):
+    if mode == 'serial':
+        download_files_serial(selected_files, server_url)
+    elif mode == 'parallel':
+        download_files_parallel(selected_files, server_url)
   
   
 if __name__ == "__main__":
@@ -85,22 +91,33 @@ if __name__ == "__main__":
         {
             'type': 'list',
             'name': 'mode',
-            'message': 'Please choose the mode for downloading',
+            'message': 'Please choose the mode for downloading:',
             'choices': [
                 'serial',
                 'parallel'
             ]
         },
+        {
+            'type': 'input',
+            'name': 'client_num',
+            'message': 'How many client would you like to spawn?',
+            'default': '1'
+        }
     ]
     download_config = prompt(download_questions)
     selected_files = {f : file_list[f] for f in download_config["selected_files"]}
     
     start = time.time()
 
-    if download_config["mode"] == 'serial':
-        download_files_serial(selected_files, server_config['url'])
-    elif download_config["mode"] == 'parallel':
-        download_files_parallel(selected_files, server_config['url'])
+    # Spawning serveral clients in threads
+    threads = list()
+    for i in range(int(download_config['client_num'])):  
+        t = threading.Thread(target=run_client, args=(selected_files, server_config['url'], download_config["mode"]))
+        threads.append(t)
+        t.start()
+    
+    for thread in threads:
+        thread.join()
     
     end = time.time()
     print(f"Time taken: {end - start} sec")
