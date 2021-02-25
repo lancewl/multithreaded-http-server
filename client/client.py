@@ -1,6 +1,7 @@
 from __future__ import print_function, unicode_literals
 import requests  
 import hashlib
+import threading
 from PyInquirer import prompt, print_json
   
 def get_file_list(server_url):  
@@ -28,12 +29,26 @@ def download_file(file_name, file_link, file_md5):
         
     print( "%s downloaded!\n"%file_name ) 
   
-def download_all_files(file_list, server_url):  
+def download_files_serial(file_list, server_url):  
   
     for file_name, file_info in file_list.items():  
         if file_info["type"] == "file": # Only download files
             download_file(file_name, server_url + file_info["link"], file_info["md5"])
   
+    print ("All files downloaded!") 
+    return
+
+def download_files_parallel(file_list, server_url):  
+    threads = list()
+    for file_name, file_info in file_list.items():  
+        if file_info["type"] == "file": # Only download files
+            t = threading.Thread(target=download_file, args=(file_name, server_url + file_info["link"], file_info["md5"]))
+            threads.append(t)
+            t.start()
+    
+    for thread in threads:
+        thread.join()
+            
     print ("All files downloaded!") 
     return
   
@@ -65,9 +80,21 @@ if __name__ == "__main__":
             'name': 'selected_files',
             'message': 'Please choose the files to download:',
             'choices': choices
-        }
+        },
+        {
+            'type': 'list',
+            'name': 'mode',
+            'message': 'Please choose the mode for downloading',
+            'choices': [
+                'serial',
+                'parallel'
+            ]
+        },
     ]
     download_config = prompt(download_questions)
     selected_files = {f : file_list[f] for f in download_config["selected_files"]}
-    # download all videos  
-    download_all_files(selected_files, server_config['url'])
+    
+    if download_config["mode"] == 'serial':
+        download_files_serial(selected_files, server_config['url'])
+    elif download_config["mode"] == 'parallel':
+        download_files_parallel(selected_files, server_config['url'])
