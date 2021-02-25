@@ -2,6 +2,7 @@ from __future__ import print_function, unicode_literals
 import requests  
 import hashlib
 import threading
+import time
 from PyInquirer import prompt, print_json
   
 def get_file_list(server_url):  
@@ -94,7 +95,12 @@ if __name__ == "__main__":
     download_config = prompt(download_questions)
     selected_files = {f : file_list[f] for f in download_config["selected_files"]}
     
+    start = time.time()
+
     if download_config["mode"] == 'serial':
         download_files_serial(selected_files, server_config['url'])
     elif download_config["mode"] == 'parallel':
         download_files_parallel(selected_files, server_config['url'])
+    
+    end = time.time()
+    print(f"Time taken: {end - start} sec")
