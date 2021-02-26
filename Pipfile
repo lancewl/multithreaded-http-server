@@ -11,6 +11,8 @@ click = "*"
 requests = "*"
 html5lib = "*"
 pyinquirer = "*"
+matplotlib = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.7"
