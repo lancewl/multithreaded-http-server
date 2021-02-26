@@ -53,11 +53,12 @@ def download_files_parallel(file_list, server_url):
             
     return
 
-def run_client(selected_files, server_url, mode):
-    if mode == 'serial':
-        download_files_serial(selected_files, server_url)
-    elif mode == 'parallel':
-        download_files_parallel(selected_files, server_url)
+def run_client(selected_files, server_url, mode, repeat):
+    for _ in range(repeat):
+        if mode == 'serial':
+            download_files_serial(selected_files, server_url)
+        elif mode == 'parallel':
+            download_files_parallel(selected_files, server_url)
   
   
 if __name__ == "__main__":
@@ -102,6 +103,12 @@ if __name__ == "__main__":
             'name': 'client_num',
             'message': 'How many client would you like to spawn?',
             'default': '1'
+        },
+        {
+            'type': 'input',
+            'name': 'client_repeat',
+            'message': 'How many experiments would you like to repeat for each client?',
+            'default': '1'
         }
     ]
     download_config = prompt(download_questions)
@@ -116,7 +123,7 @@ if __name__ == "__main__":
     # Spawning serveral clients in threads
     threads = list()
     for i in range(int(download_config['client_num'])):  
-        t = threading.Thread(target=run_client, args=(selected_files, server_config['url'], download_config["mode"]))
+        t = threading.Thread(target=run_client, args=(selected_files, server_config['url'], download_config["mode"], int(download_config["client_repeat"])))
         threads.append(t)
         t.start()
     
