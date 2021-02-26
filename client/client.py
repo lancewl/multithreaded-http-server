@@ -28,9 +28,9 @@ def download_file(file_name, file_link, file_md5):
             for chunk in r.iter_content(chunk_size = 1024*1024):  
                 if chunk:  
                     f.write(chunk)
-        print(file_name + f" downloaded, time taken - {end - start} sec" ) 
+        print(file_name + f" downloaded, time taken: {end - start} sec" ) 
     else:
-        print( "Checksum failed, failed to download %s!"%file_name ) 
+        print(file_name + f" download failed, md5 not match" )
     
   
 def download_files_serial(file_list, server_url):  
