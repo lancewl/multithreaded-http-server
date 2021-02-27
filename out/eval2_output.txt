@@ -1,0 +1,59 @@
+Clinet:
+➤ python client.py
+? Please enter the server IP and port:  http://localhost:8888/
+? Please choose the files to download:  done (5 selections)
+? Please choose the mode for downloading:  parallel
+? How many client would you like to spawn?  4
+? How many experiments would you like to repeat for each client?  1
+Start to download following files:
+['128b.txt', '2k.txt', '32k.txt', '512b.txt', '8k.txt']
+
+
+128b.txt downloaded, time taken: 0.03389716148376465 sec
+2k.txt downloaded, time taken: 0.0378880500793457 sec
+128b.txt downloaded, time taken: 0.04118919372558594 sec
+128b.txt downloaded, time taken: 0.04400205612182617 sec
+128b.txt downloaded, time taken: 0.03827714920043945 sec
+512b.txt downloaded, time taken: 0.03595900535583496 sec
+32k.txt downloaded, time taken: 0.03914380073547363 sec
+8k.txt downloaded, time taken: 0.02597808837890625 sec
+512b.txt downloaded, time taken: 0.046698808670043945 sec
+8k.txt downloaded, time taken: 0.02495288848876953 sec
+2k.txt downloaded, time taken: 0.05658984184265137 sec
+32k.txt downloaded, time taken: 0.03955888748168945 sec
+2k.txt downloaded, time taken: 0.04562878608703613 sec
+512b.txt downloaded, time taken: 0.024450063705444336 sec
+32k.txt downloaded, time taken: 0.024939775466918945 sec
+32k.txt downloaded, time taken: 0.04030013084411621 sec
+8k.txt downloaded, time taken: 0.03674817085266113 sec
+512b.txt downloaded, time taken: 0.03647899627685547 sec
+2k.txt downloaded, time taken: 0.05160665512084961 sec
+8k.txt downloaded, time taken: 0.02144908905029297 sec
+
+
+Total Time taken: 0.06503105163574219 sec
+
+Server:
+➤ python server.py             
+Server started at localhost:8888
+127.0.0.1 - - [27/Feb/2021 00:07:05] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /128b.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /2k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /128b.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /128b.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /128b.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /32k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /2k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /32k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /32k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /8k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /8k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /32k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /512b.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /512b.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /512b.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /8k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /2k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /2k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /8k.txt HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:07:13] "GET /512b.txt HTTP/1.1" 200 -

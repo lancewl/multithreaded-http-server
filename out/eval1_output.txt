@@ -1,0 +1,21 @@
+Clinet:
+➤ python client.py
+? Please enter the server IP and port:  http://localhost:8888/
+? Please choose the files to download:  [128b.txt]
+? Please choose the mode for downloading:  serial
+? How many client would you like to spawn?  1
+? How many experiments would you like to repeat for each client?  1
+Start to download following files:
+['128b.txt']
+
+
+128b.txt downloaded, time taken: 0.005339145660400391 sec
+
+
+Total Time taken: 0.006161928176879883 sec
+
+Server:
+➤ python server.py
+Server started at localhost:8888
+127.0.0.1 - - [27/Feb/2021 00:06:02] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2021 00:06:13] "GET /128b.txt HTTP/1.1" 200 -
