@@ -24,6 +24,7 @@ plt.title("Client Number Evaluation")
 plt.xlabel("Number of Clients")
 plt.ylabel("Transfer Speed (MB/s)")
 
+plt.savefig("client_num_eval_graph.png")
 plt.show()
 
 x = ds_eval['size(kb)']
@@ -36,4 +37,5 @@ plt.title("File Size Evaluation")
 plt.xlabel("File Size (KB)")
 plt.ylabel("Transfer Speed (MB/s)")
 
+plt.savefig("data_size_eval_graph.png")
 plt.show()
