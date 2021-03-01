@@ -15,7 +15,7 @@ def download_file(file_name, file_link, file_md5):
     # print( "Downloading file:%s"%file_name)  
     start = time.time()
     
-    # create response object  
+    # request file from server
     try:
         r = requests.get(file_link, stream = True)  
     except:
