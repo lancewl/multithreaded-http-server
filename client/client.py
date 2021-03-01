@@ -16,7 +16,11 @@ def download_file(file_name, file_link, file_md5):
     start = time.time()
     
     # create response object  
-    r = requests.get(file_link, stream = True)  
+    try:
+        r = requests.get(file_link, stream = True)  
+    except:
+        print("Failed to download" + file_name)
+        return
 
     end = time.time()
 
